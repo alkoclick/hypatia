@@ -20,8 +20,8 @@ services:
       - tika
       - ts-paperless
     volumes:
-      - data:/usr/src/paperless/data
-      - media:/usr/src/paperless/media
+      - /media/external/data/paperless/data:/usr/src/paperless/data
+      - /media/external/data/paperless/media:/usr/src/paperless/media
     env_file: paperless.env
     environment:
       PAPERLESS_REDIS: redis://broker:6379
@@ -54,29 +54,26 @@ services:
       - TIKA_OPTS=-Xmx512m -Xms512m
     mem_limit: 512m
 
-  ts-paperless:
-    image: tailscale/tailscale:latest
-    container_name: ts-paperless
-    hostname: paperless
-    environment:
-      - TS_STATE_DIR=/var/lib/tailscale
-      - TS_AUTHKEY=${TS_AUTHKEY:?error}
-      - TS_EXTRA_ARGS=--reset
-      - TS_SERVE_CONFIG=/config/paperless.json
-      - TS_USERSPACE=false
-    volumes:
-      - ./tailscale/paperless.json:/config/paperless.json
-      - ts-paperless:/var/lib/tailscale
-    devices:
-      - /dev/net/tun:/dev/net/tun
-    cap_add:
-      - net_admin
-    restart: unless-stopped
-    mem_limit: 200m
+#  ts-paperless:
+#    image: tailscale/tailscale:latest
+#    container_name: ts-paperless
+#    hostname: paperless
+#    environment:
+#      - TS_STATE_DIR=/var/lib/tailscale
+#      - TS_AUTHKEY=${TS_AUTHKEY:?error}
+#      - TS_EXTRA_ARGS=--reset
+#      - TS_SERVE_CONFIG=/config/paperless.json
+#      - TS_USERSPACE=false
+#    volumes:
+#      - ./tailscale/paperless.json:/config/paperless.json
+#      - ts-paperless:/var/lib/tailscale
+#    devices:
+#      - /dev/net/tun:/dev/net/tun
+#    cap_add:
+#      - net_admin
+#    restart: unless-stopped
+#    mem_limit: 200m
 
 volumes:
-  # SQLite is used as the paperless database. The SQLite file is stored in the data volume.
-  data:
-  media:
   redisdata:
-  ts-paperless:
+#  ts-paperless:
