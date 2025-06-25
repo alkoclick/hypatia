@@ -66,6 +66,55 @@ services:
     restart: unless-stopped
     mem_limit: 200m
 
+  speedtest:
+    image: lscr.io/linuxserver/speedtest-tracker
+    container_name: speedtest
+    platform: linux/arm64
+    security_opt:
+      - seccomp:unconfined # Because error code 159 keeps showing up otherwise
+    network_mode: service:ts-speedtest
+    # We have to bind this in because by default they enable a 443 listener which keeps complaining due to Tailscale already using it
+    volumes:
+      - ./speedtest/nginx.conf:/config/nginx/site-confs/default.conf:ro
+    environment:
+      - PUID=1000
+      - PGID=1000
+      # seCuRiTy lmao: https://docs.speedtest-tracker.dev/security/encryption
+      - APP_KEY=base64:BlHsZAQoZaeNRYgVbLd3vaLcKH6D/+EFce+ADK0jb8g=
+      - DB_CONNECTION=sqlite
+      - PUBLIC_DASHBOARD=true
+      - SPEEDTEST_SCHEDULE=*/15 * * * *  # Every 15 minutes
+      - DISPLAY_TIMEZONE=Europe/Amsterdam
+    healthcheck:
+      test: curl -fSs APP_URL/api/healthcheck | jq -r .message || exit 1
+      interval: 10s
+      retries: 3
+      start_period: 30s
+      timeout: 10s
+    restart: unless-stopped
+    mem_limit: 200m
+
+  ts-speedtest:
+    image: tailscale/tailscale:latest
+    container_name: ts-speedtest
+    hostname: speedtest-hypatia
+    environment:
+      - TS_STATE_DIR=/var/lib/tailscale
+      - TS_AUTHKEY=${TS_AUTHKEY:?error}
+      - TS_EXTRA_ARGS=--reset
+      - TS_SERVE_CONFIG=/config/speedtest.json
+      - TS_USERSPACE=false
+    volumes:
+      - ./speedtest.json:/config/speedtest.json
+      - ts-speedtest:/var/lib/tailscale
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    cap_add:
+      - net_admin
+    restart: unless-stopped
+    mem_limit: 200m
+
 volumes:
   ts-dozzle:
   ts-glances:
+  ts-speedtest:
