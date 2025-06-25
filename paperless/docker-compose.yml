@@ -76,4 +76,4 @@ services:
 
 volumes:
   redisdata:
-#  ts-paperless:
+  ts-paperless:
