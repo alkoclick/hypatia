@@ -19,7 +19,7 @@ services:
       - TS_SERVE_CONFIG=/config/dozzle.json
       - TS_USERSPACE=false
     volumes:
-      - ./tailscale/dozzle.json:/config/dozzle.json
+      - ./dozzle.json:/config/dozzle.json
       - ts-dozzle:/var/lib/tailscale
     devices:
       - /dev/net/tun:/dev/net/tun
@@ -57,7 +57,7 @@ services:
       - TS_SERVE_CONFIG=/config/glances.json
       - TS_USERSPACE=false
     volumes:
-      - ./tailscale/glances.json:/config/glances.json
+      - ./glances.json:/config/glances.json
       - ts-glances:/var/lib/tailscale
     devices:
       - /dev/net/tun:/dev/net/tun
