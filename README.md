@@ -19,7 +19,6 @@ My (second) self-hosting setup, currently on a Raspberry Pi 5.
 
 * Set up syncthing for paperless again
 * Add the memory cgroups fix
-* Add remote tailscale SSH access
 * Add Photoprism or Immich
 * Translation tooling:
     * Supports on-the-spot translations
