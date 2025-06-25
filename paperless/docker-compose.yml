@@ -54,6 +54,21 @@ services:
       - TIKA_OPTS=-Xmx1024m -Xms1024m
     mem_limit: 1024m
 
+  syncthing:
+    image: syncthing/syncthing:latest
+    container_name: syncthing
+    restart: unless-stopped
+    #    ports:
+    #      - "8484:8384"   # Exposes the Syncthing web UI on port 8484, off by default unless you need it for troubleshooting
+    volumes:
+      - /media/external/data/paperless/media:/media   # Mounts the paperless media volume
+      - ./syncthing/config.xml:/var/syncthing/config/config.xml  # Persist Syncthing's settings
+    environment:
+      - PUID=1000  # Use your desired user ID for the container
+      - PGID=1000  # Use your desired group ID for the container
+    # Add a secret API key to secure the Syncthing web UI
+    mem_limit: 128m
+
   ts-paperless:
     image: tailscale/tailscale:latest
     container_name: ts-paperless
