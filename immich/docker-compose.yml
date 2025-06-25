@@ -21,7 +21,7 @@ services:
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
       - /etc/localtime:/etc/localtime:ro
     env_file:
-      - immich.env
+      - .env
     environment:
       TZ: Europe/Amsterdam
     depends_on:
