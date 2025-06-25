@@ -29,7 +29,7 @@ services:
       PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
       PAPERLESS_TIKA_ENDPOINT: http://tika:9998
     network_mode: service:ts-paperless
-    mem_limit: 2000m
+    mem_limit: 2500m
 
   # - Apache Tika and Gotenberg servers are started with paperless and paperless
   #   is configured to use these services. These provide support for consuming
@@ -51,8 +51,8 @@ services:
     image: docker.io/apache/tika:latest
     restart: unless-stopped
     environment:
-      - TIKA_OPTS=-Xmx512m -Xms512m
-    mem_limit: 512m
+      - TIKA_OPTS=-Xmx1024m -Xms1024m
+    mem_limit: 1024m
 
   ts-paperless:
     image: tailscale/tailscale:latest
