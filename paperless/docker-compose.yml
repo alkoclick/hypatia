@@ -12,8 +12,8 @@ services:
     image: ghcr.io/paperless-ngx/paperless-ngx:latest
     platform: linux/arm64 # Because the autodetection does not work for Raspberry Pi
     restart: unless-stopped
-#    security_opt:
-#      - seccomp:unconfined
+    security_opt:
+      - seccomp:unconfined
     depends_on:
       - broker
       - gotenberg
@@ -65,7 +65,7 @@ services:
       - TS_SERVE_CONFIG=/config/paperless.json
       - TS_USERSPACE=false
     volumes:
-      - ./tailscale/paperless.json:/config/paperless.json
+      - ./paperless.json:/config/paperless.json
       - ts-paperless:/var/lib/tailscale
     devices:
       - /dev/net/tun:/dev/net/tun
