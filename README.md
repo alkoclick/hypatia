@@ -18,8 +18,7 @@ My (second) self-hosting setup, currently on a Raspberry Pi 5.
 ## TODO
 
 * Set up syncthing for paperless again
-* Add the memory cgroups fix
-* Add Photoprism or Immich
+* Set up backups for Immich
 * Translation tooling:
     * Supports on-the-spot translations
     * Supports document translation
