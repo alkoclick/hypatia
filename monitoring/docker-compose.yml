@@ -17,7 +17,11 @@ services:
       - TS_AUTHKEY=${TS_AUTHKEY:?error}
       - TS_EXTRA_ARGS=--reset
       - TS_SERVE_CONFIG=/config/dozzle.json
-      - TS_USERSPACE=false
+      - TS_USERSPACE=false    
+        # See https://github.com/tailscale/tailscale/issues/14008
+    dns:
+      - 100.100.100.100  # For tailnet address (<mach>.<tailnet>.ts.net) lookups.
+      - 1.1.1.1  # For external lookups.
     volumes:
       - ./dozzle.json:/config/dozzle.json
       - ts-dozzle:/var/lib/tailscale
@@ -55,7 +59,11 @@ services:
       - TS_AUTHKEY=${TS_AUTHKEY:?error}
       - TS_EXTRA_ARGS=--reset
       - TS_SERVE_CONFIG=/config/glances.json
-      - TS_USERSPACE=false
+      - TS_USERSPACE=false    
+        # See https://github.com/tailscale/tailscale/issues/14008
+    dns:
+      - 100.100.100.100  # For tailnet address (<mach>.<tailnet>.ts.net) lookups.
+      - 1.1.1.1  # For external lookups.
     volumes:
       - ./glances.json:/config/glances.json
       - ts-glances:/var/lib/tailscale
@@ -104,6 +112,10 @@ services:
       - TS_EXTRA_ARGS=--reset
       - TS_SERVE_CONFIG=/config/speedtest.json
       - TS_USERSPACE=false
+        # See https://github.com/tailscale/tailscale/issues/14008
+    dns:
+      - 100.100.100.100  # For tailnet address (<mach>.<tailnet>.ts.net) lookups.
+      - 1.1.1.1  # For external lookups.
     volumes:
       - ./speedtest.json:/config/speedtest.json
       - ts-speedtest:/var/lib/tailscale

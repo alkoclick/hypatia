@@ -79,7 +79,11 @@ services:
       - TS_AUTHKEY=${TS_AUTHKEY:?error}
       - TS_EXTRA_ARGS=--reset
       - TS_SERVE_CONFIG=/config/paperless.json
-      - TS_USERSPACE=false
+      - TS_USERSPACE=false    
+        # See https://github.com/tailscale/tailscale/issues/14008
+    dns:
+      - 100.100.100.100  # For tailnet address (<mach>.<tailnet>.ts.net) lookups.
+      - 1.1.1.1  # For external lookups.
     volumes:
       - ./paperless.json:/config/paperless.json
       - ts-paperless:/var/lib/tailscale
