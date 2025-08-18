@@ -1,3 +1,3 @@
 **/*.env
-syncthing/config/*
-syncthing/config/!config.xml
+paperless/syncthing/config/*
+paperless/syncthing/config/!config.xml
