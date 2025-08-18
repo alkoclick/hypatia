@@ -63,8 +63,9 @@ services:
     #      - "8484:8384"   # Exposes the Syncthing web UI on port 8484, off by default unless you need it for troubleshooting
     volumes:
       - /media/external/data/paperless/media:/media   # Mounts the paperless media volume
-      - ./syncthing/config.xml:/var/syncthing/config/config.xml  # Persist Syncthing's settings
+      - ./syncthing/config:/var/syncthing/config/  # Persist Syncthing's settings
     environment:
+      - STGUIADDRESS=
       - PUID=1000  # Use your desired user ID for the container
       - PGID=1000  # Use your desired group ID for the container
     # Add a secret API key to secure the Syncthing web UI
